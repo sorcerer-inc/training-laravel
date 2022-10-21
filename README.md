@@ -21,6 +21,7 @@
 
 ## 初期設定
 1. `.env.example` を `.env`にリネームする
+1. `docker-compose up`を実行する
 1. コンテナの中に入る
     ```
     docker-compose exec app bash
