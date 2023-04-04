@@ -9,6 +9,9 @@
      1. brew install php@7.4
      1. brew link php@7.4
      1. brew install composer
+1. Docker
+    * Dockerをインストールする
+    * https://www.docker.com/
 1. Postman
    * APIクライアントに使用する
    * https://www.postman.com/downloads/
@@ -31,7 +34,7 @@
     composer update
     composer install
     ```
-1. sqliteにplayersテーブルを作成する
+1. MySQL上にplayersテーブルを作成する
     ```
     php artisan migrate --seed
     ```
