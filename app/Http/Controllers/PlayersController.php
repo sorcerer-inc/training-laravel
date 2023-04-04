@@ -18,9 +18,8 @@ class PlayersController extends Controller
     public function index()
     {
         return new Response(
-            Player::query()->
-            select(['id', 'name'])->
-            get());
+            Player::query()->select(['id', 'name','hp','mp','money'])->get() // SELECT id, name... FROM Player
+        );
     }
 
     /**
@@ -31,7 +30,9 @@ class PlayersController extends Controller
      */
     public function show($id)
     {
-
+        return new Response(
+            Player::find($id)
+        );  
     }
 
     /**
