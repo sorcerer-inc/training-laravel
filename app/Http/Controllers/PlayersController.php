@@ -32,12 +32,7 @@ class PlayersController extends Controller
      */
     public function show($id)
     {
-        return new Response(
-            Player::query()
-                ->where('id', $id) // 指定したIDに一致するプレイヤーを検索
-                ->select(['id', 'name', 'hp', 'mp', 'money']) // 指定したカラムを選択
-                ->first() // 指定したIDを検索し、一番初めに合致した結果を取得
-        );
+        //
     }
 
     /**
@@ -48,15 +43,7 @@ class PlayersController extends Controller
      */
     public function store(Request $request)
     {
-        Player::insertGetid(
-            [
-            'id'=>$request->id,
-            'name'=>$request->name,
-            'hp'=>$request->hp,
-            'mp'=>$request->mp,
-            'money'=>$request->money,
-        ]
-        );
+        //
     }
 
     /**
@@ -68,15 +55,7 @@ class PlayersController extends Controller
      */
     public function update(Request $request, $id)
     {
-        Player::Where('id',$id)
-        ->update(
-            [
-            'name'=>$request->name,
-            'hp'=>$request->hp,
-            'mp'=>$request->mp,
-            'money'=>$request->money,
-        ]
-        );
+        //
     }
 
     /**
@@ -87,8 +66,7 @@ class PlayersController extends Controller
      */
     public function destroy($id)
     {
-        Player::where('id', $id) // 指定したIDに一致するプレイヤーを検索
-        ->delete();
+        //
     }
 
     /**
