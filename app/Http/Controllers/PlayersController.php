@@ -34,9 +34,9 @@ class PlayersController extends Controller
     {
         return new Response(
             Player::query()
-                ->where('id', $id) // 指定したIDに一致するプレイヤーを検索
+                ->where('id','=',$id) // 指定したIDに一致するプレイヤーを検索
                 ->select(['id', 'name', 'hp', 'mp', 'money']) // 指定したカラムを選択
-                ->first() // 指定したIDを検索し、一番初めに合致した結果を取得
+                ->get() // 結果を取得
         );
     }
 
@@ -48,7 +48,8 @@ class PlayersController extends Controller
      */
     public function store(Request $request)
     {
-        Player::insertGetid(
+
+        Player::insertGetid(    // 送られてきたデータに沿ってカラムを新規作成
             [
             'id'=>$request->id,
             'name'=>$request->name,
@@ -57,6 +58,9 @@ class PlayersController extends Controller
             'money'=>$request->money,
         ]
         );
+
+        // JSONレスポンスとしてidを返す
+        return response()->json(['id' => $request->id]);
     }
 
     /**
@@ -68,8 +72,8 @@ class PlayersController extends Controller
      */
     public function update(Request $request, $id)
     {
-        Player::Where('id',$id)
-        ->update(
+        Player::Where('id','=',$id) // 指定したIDに一致するプレイヤーを検索
+        ->update(   // 送られてきたデータに沿って指定されたIDのカラムを更新
             [
             'name'=>$request->name,
             'hp'=>$request->hp,
@@ -77,6 +81,9 @@ class PlayersController extends Controller
             'money'=>$request->money,
         ]
         );
+
+        // UP DATEが完了したらJSONレスポンスを返す
+        return response()->json(['update complete.']);
     }
 
     /**
@@ -87,8 +94,11 @@ class PlayersController extends Controller
      */
     public function destroy($id)
     {
-        Player::where('id', $id) // 指定したIDに一致するプレイヤーを検索
-        ->delete();
+        Player::where('id','=',$id) // 指定したIDに一致するプレイヤーを検索
+        ->delete(); // 削除
+
+        // DELETEが完了したらJSONレスポンスを返す
+        return response()->json(['delete complete.']);
     }
 
     /**
