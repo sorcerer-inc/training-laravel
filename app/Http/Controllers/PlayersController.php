@@ -19,7 +19,7 @@ class PlayersController extends Controller
     {
         return new Response(
             Player::query()->
-            select(['id', 'name'])->
+            select(['id', 'name','hp','mp','money'])->
             get());
     }
 
@@ -31,7 +31,11 @@ class PlayersController extends Controller
      */
     public function show($id)
     {
-
+        return new Response(
+            Player::query()->
+            where('id',$id)->
+            select(['id', 'name','hp','mp','money'])->
+            first());
     }
 
     /**
@@ -42,7 +46,15 @@ class PlayersController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        return new Response(
+        Player::query()->
+        insertGetId([
+            'id'    => $request->input('id'),
+            'name'  => $request->input('name'),
+            'hp'    => $request->input('hp'),
+            'mp'    => $request->input('mp'),
+            'money' => $request->input('money'),
+        ]));
     }
 
     /**
@@ -54,7 +66,15 @@ class PlayersController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        Player::query()->
+        where('id',$id)->
+        update([
+            'id'    => $request->input('id'),
+            'name'  => $request->input('name'),
+            'hp'    => $request->input('hp'),
+            'mp'    => $request->input('mp'),
+            'money' => $request->input('money'),
+        ]);
     }
 
     /**
@@ -65,7 +85,9 @@ class PlayersController extends Controller
      */
     public function destroy($id)
     {
-        //
+        Player::query()->
+        where('id',$id)->
+        delete();
     }
 
     /**
