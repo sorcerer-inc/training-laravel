@@ -49,13 +49,14 @@ class PlayersController extends Controller
         return new Response(
         Player::query()->
         insertGetId([
-            'id'    => $request->input('id'),
-            'name'  => $request->input('name'),
-            'hp'    => $request->input('hp'),
-            'mp'    => $request->input('mp'),
-            'money' => $request->input('money'),
+            'id'    => $request->id,
+            'name'  => $request->name,
+            'hp'    => $request->hp,
+            'mp'    => $request->mp,
+            'money' => $request->money,
         ]));
     }
+    
 
     /**
      * Update the specified resource in storage.
