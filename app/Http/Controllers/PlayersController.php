@@ -46,14 +46,16 @@ class PlayersController extends Controller
      */
     public function store(Request $request)
     {
-        return new Response(
-        Player::query()->
+       
+        $id = Player::query()->
         insertGetId([
             'name'  => $request->name,
             'hp'    => $request->hp,
             'mp'    => $request->mp,
             'money' => $request->money,
-        ]));
+        ]);
+
+        return Response() -> json(['id' => $id]);
     }
     
 
