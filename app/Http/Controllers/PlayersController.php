@@ -33,9 +33,8 @@ class PlayersController extends Controller
     {
         return new Response(
             Player::query()->
-            where('id',$id)->
-            select(['id', 'name','hp','mp','money'])->
-            first());
+            find($id)
+        );
     }
 
     /**
@@ -70,11 +69,11 @@ class PlayersController extends Controller
         Player::query()->
         where('id',$id)->
         update([
-            'id'    => $request->input('id'),
-            'name'  => $request->input('name'),
-            'hp'    => $request->input('hp'),
-            'mp'    => $request->input('mp'),
-            'money' => $request->input('money'),
+            'id'    => $request->id,
+            'name'  => $request->name,
+            'hp'    => $request->hp,
+            'mp'    => $request->mp,
+            'money' => $request->money,
         ]);
     }
 
