@@ -68,13 +68,9 @@ class PlayersController extends Controller
     {
         Player::query()->
         where('id',$id)->
-        update([
-            'id'    => $request->id,
-            'name'  => $request->name,
-            'hp'    => $request->hp,
-            'mp'    => $request->mp,
-            'money' => $request->money,
-        ]);
+        update(
+            $request->all()
+        );
     }
 
     /**
