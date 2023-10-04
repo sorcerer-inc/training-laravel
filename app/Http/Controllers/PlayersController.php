@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Resources\PlayerResource;
 use App\Models\Player;
+use App\Models\Item;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Log;
@@ -48,7 +49,6 @@ class PlayersController extends Controller
         return new Response(
         Player::query()->
         insertGetId([
-            'id'    => $request->id,
             'name'  => $request->name,
             'hp'    => $request->hp,
             'mp'    => $request->mp,
