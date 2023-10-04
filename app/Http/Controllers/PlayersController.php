@@ -88,6 +88,17 @@ class PlayersController extends Controller
         delete();
     }
 
+    public function index_sample()
+    {
+        // テーブルを結合してデータを取得
+        $playersWithItems = Player::join('items', 'players.id', '=', 'items.id')
+            ->select('players', 'items.name', 'player.name')
+            ->get();
+
+        // 結果をビューに渡す
+        return view('players.index', ['playersWithItems' => $playersWithItems]);
+    }
+
     /**
      * Show the form for creating a new resource.
      *
