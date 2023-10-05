@@ -19,5 +19,3 @@ Route::get('/players/{id}', [PlayersController::class, 'show']);
 Route::post('/players', [PlayersController::class, 'store']);
 Route::put('/players/{id}', [PlayersController::class, 'update']);
 Route::delete('/players/{id}', [PlayersController::class, 'destroy']);
-
-Route::get('/playeritems', [PlayerItemsController::class, 'index_items']);
