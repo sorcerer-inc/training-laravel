@@ -13,12 +13,12 @@ class PlayerItemsTable extends Migration
      */
     public function up()
     {
-        Schema::create('players', function (Blueprint $table) {
+        Schema::create('player_items', function (Blueprint $table) {
             
             //カラム
             $table->unsignedBigInteger('player_id')->comment("プレイヤーID");
             $table->unsignedBigInteger('item_id')->comment("アイテムID");
-            $table->$table->integer('count')->comment("所持個数");
+            $table->integer('count')->comment("所持個数");
 
             //playerとitemのidを複合主キーとして持つ
             $table->primary(['player_id', 'item_id']);

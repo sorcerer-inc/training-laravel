@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Resources\PlayerResource;
-use App\Http\Resources\ItemResource;
+//use App\Http\Resources\PlayerResource;
+//use App\Http\Resources\ItemResource;
 use App\Models\Player;
 use App\Models\Item;
 use Illuminate\Http\Request;
@@ -12,7 +12,7 @@ use Illuminate\Support\Facades\Log;
 
 class PlayerItemsController extends Controller
 {
-    public function index()
+    public function index_items()
     {
         // players テーブルと items テーブルを結合してデータを取得
         $playersWithItems = Player::join('items', 'players.id', '=', 'items.player_id')
