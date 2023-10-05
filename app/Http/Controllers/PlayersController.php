@@ -15,7 +15,6 @@ class PlayersController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    //全てのプレイヤーテーブルのカラムの表示
     public function index()
     {
         return new Response(
@@ -30,7 +29,6 @@ class PlayersController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    //指定したIDの情報をプレイヤーテーブルから表示
     public function show($id)
     {
         return new Response(
@@ -45,7 +43,6 @@ class PlayersController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    //新規のIDを自動で割り当て入力した情報を挿入する
     public function store(Request $request)
     {
        
@@ -68,7 +65,6 @@ class PlayersController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    //指定したIDに入力した情報を更新する
     public function update(Request $request, $id)
     {
         Player::query()->
@@ -84,7 +80,6 @@ class PlayersController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    //指定したIDの情報を削除する
     public function destroy($id)
     {
         Player::query()->
