@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Resources\PlayerResource;
 use App\Models\Player;
+use App\Models\Item;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Log;
@@ -86,7 +87,6 @@ class PlayersController extends Controller
         where('id',$id)->
         delete();
     }
-
 
     /**
      * Show the form for creating a new resource.
