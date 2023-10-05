@@ -20,7 +20,4 @@ Route::post('/players', [PlayersController::class, 'store']);
 Route::put('/players/{id}', [PlayersController::class, 'update']);
 Route::delete('/players/{id}', [PlayersController::class, 'destroy']);
 
-Route::get('/items', [ItemsController::class, 'index_item']);
-Route::post('/items', [ItemsController::class, 'additem']);
-
-Route::get('/players', [PlayerController::class, 'index_sample']);
+Route::get('/player', [PlayerItemsController::class, 'index']);

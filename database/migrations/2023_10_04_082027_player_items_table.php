@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class PlayerItemTable extends Migration
+class PlayerItemsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -15,12 +15,12 @@ class PlayerItemTable extends Migration
     {
         Schema::create('players', function (Blueprint $table) {
             
-            $table->mediumIncrements('player_id')->comment("プレイヤーID");
-            $table->mediumIncrements('item_id')->comment("アイテムID");
-            $table->string('player_name')->comment("プレイヤー名");
-            $table->string('item_name')->comment("アイテム名");
+            //カラム
+            $table->unsignedBigInteger('player_id')->comment("プレイヤーID");
+            $table->unsignedBigInteger('item_id')->comment("アイテムID");
             $table->$table->integer('count')->comment("所持個数");
 
+            //playerとitemのidを複合主キーとして持つ
             $table->primary(['player_id', 'item_id']);
         });
     }
@@ -32,6 +32,6 @@ class PlayerItemTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('items');
+        Schema::dropIfExists('player_items');
     }
 }
