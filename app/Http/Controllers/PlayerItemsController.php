@@ -31,7 +31,8 @@ class PlayerItemsController extends Controller
             $playerItem->save();
 
             // レスポンスを返す
-            return response('新しいアイテムを挿入しました。');
+            return Response() -> json(['itemId' => $request->itemId,
+            'count' => $request->count,]);
         }
 
         // 既存のアイテムが存在する場合、countを加算
@@ -41,6 +42,7 @@ class PlayerItemsController extends Controller
         $playerItem->save();
 
         // レスポンスを返す
-        return response('アイテムのカウントを更新しました。');
+        return Response() -> json(['itemId' => $request->itemId,
+            'count' => $request->count,]);
     }
 }
