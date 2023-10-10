@@ -16,7 +16,6 @@ class PlayersController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    //playerテーブルの全てのカラムを表示する
     public function index()
     {
         return new Response(
@@ -31,7 +30,6 @@ class PlayersController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    //playerテーブルから指定したIDのカラムを表示する
     public function show($id)
     {
         return new Response(
@@ -46,7 +44,6 @@ class PlayersController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    //playerテーブルに自動増分したIDに新規でカラムを挿入する
     public function store(Request $request)
     {
        
@@ -69,7 +66,6 @@ class PlayersController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    //playerテーブルに指定したIDのカラムを指定した内容に更新する
     public function update(Request $request, $id)
     {
         Player::query()->
@@ -85,7 +81,6 @@ class PlayersController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    //playerテーブルから指定したIDのカラムを削除する
     public function destroy($id)
     {
         Player::query()->
