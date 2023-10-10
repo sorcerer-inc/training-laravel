@@ -11,5 +11,10 @@ class PlayerItems extends Model
     protected $fillable = ['player_id', 'item_id', 'count'];
     protected $table = 'player_items';
     public $timestamps = false;
+
+    // プライマリキーを明示的に設定
+    protected $primaryKey = null;
+    public $incrementing = false;
+
     use HasFactory;
 }
