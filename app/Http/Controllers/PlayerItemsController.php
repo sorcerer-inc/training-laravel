@@ -55,11 +55,6 @@ class PlayerItemsController extends Controller
         ->where('item_id', $request->itemId)
         ->first();
 
-    // アイテムが存在しない場合はエラーレスポンスを返す
-    if (!$playerItem) {
-        return response()->json(['error' => 'Item not found'], 400);
-    }
-
     // アイテムの所持数がゼロの場合はエラーレスポンスを返す
     if ($playerItem->count <= 0) {
         return response()->json(['error' => 'No items remaining'], 400);
@@ -79,9 +74,10 @@ class PlayerItemsController extends Controller
         $itemValue = Item::where('id', $request->itemId)->value('value');
 
         // HP増加処理
-        $newHp = min($maxHp, $player->hp + $itemValue);
-        // HPが上限に達していない場合のみ処理
-        if ($newHp > $player->hp) {
+        if($player->hp < $maxHp)// HPが上限に達していない場合のみ処理
+        {
+            $newHp = min($maxHp, $player->hp + $itemValue);
+
             $player->hp = $newHp;
             $playerItem->count -= 1;
         }
@@ -92,9 +88,10 @@ class PlayerItemsController extends Controller
         $itemValue = Item::where('id', $request->itemId)->value('value');
 
         // MP増加処理
-        $newMp = min($maxMp, $player->mp + $itemValue);
-        // MPが上限に達していない場合のみ処理
-        if ($newMp > $player->mp) {
+        if($player->hp < $maxHp)// MPが上限に達していない場合のみ処理
+        {
+            $newMp = min($maxMp, $player->mp + $itemValue);
+
             $player->mp = $newMp;
             $playerItem->count -= 1;
         }
