@@ -60,6 +60,11 @@ class PlayerItemsController extends Controller
         return response()->json(['error' => 'Item not found'], 400);
     }
 
+    // アイテムの所持数がゼロの場合はエラーレスポンスを返す
+    if ($playerItem->count <= 0) {
+        return response()->json(['error' => 'No items remaining'], 400);
+    }
+
     // HPとMPの上限は200
     $maxHp = 200;
     $maxMp = 200;
