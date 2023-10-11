@@ -55,8 +55,8 @@ class PlayerItemsController extends Controller
         ->where('item_id', $request->itemId)
         ->first();
 
-    // アイテムの所持数がゼロの場合はエラーレスポンスを返す
-    if ($playerItem->count <= 0) {
+    // アイテムの所持数がゼロ && アイテムが存在しない場合はエラーレスポンスを返す
+    if ($playerItem->count <= 0 && !$playerItem) {
         return response()->json(['error' => 'No items remaining'], 400);
     }
 
