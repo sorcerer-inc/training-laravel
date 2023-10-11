@@ -50,70 +50,73 @@ class PlayerItemsController extends Controller
     //アイテムの使用処理
     public function useItem(Request $request, $id)
     {
-        // プレイヤーIDとアイテムIDでレコードをデータベースから検索
-        $playerItem = PlayerItems::where('player_id', $id)
-            ->where('item_id', $request->itemId)
-            ->lockForUpdate()
-            ->first();
+    // プレイヤーIDとアイテムIDでレコードをデータベースから検索
+    $playerItem = PlayerItems::where('player_id', $id)
+        ->where('item_id', $request->itemId)
+        ->first();
 
-        // HPとMPの上限は200
-        $maxHp = 200;
-        $maxMp = 200;
+    // アイテムが存在しない場合はエラーレスポンスを返す
+    if (!$playerItem) {
+        return response()->json(['error' => 'Item not found'], 400);
+    }
 
-        // プレイヤーのステータスを取得
-        $player = Player::find($id);
+    // HPとMPの上限は200
+    $maxHp = 200;
+    $maxMp = 200;
 
-        // アイテムごとの処理
-        switch ($request->itemId) {
-                //HPかいふく薬
-            case 1:
-                // アイテムの値を取得
-                $itemValue = Item::where('id', $request->itemId)->value('value');
+    // プレイヤーのステータスを取得
+    $player = Player::find($id);
 
-                // HP増加処理
-                if ($player->hp < $maxHp && $playerItem->count > 0) {
-                    $newHp = min($maxHp, $player->hp + $itemValue);
-                    // HPが上限に達していない場合のみ処理
-                    if ($newHp > $player->hp) {
-                        $player->hp = $newHp;
-                        $playerItem->count -= 1;
-                    }
-                }
-                break;
-                //MPかいふく薬
-            case 2:
-                // アイテムの値を取得
-                $itemValue = Item::where('id', $request->itemId)->value('value');
+    // アイテムごとの処理
+    if ($request->itemId == 1) 
+    { // HPかいふく薬
+        // アイテムの値を取得
+        $itemValue = Item::where('id', $request->itemId)->value('value');
 
-                // MP増加処理
-                if ($player->mp < $maxMp && $playerItem->count > 0) {
-                    $newMp = min($maxMp, $player->mp + $itemValue);
-                    // MPが上限に達していない場合のみ処理
-                    if ($newMp > $player->mp) {
-                        $player->mp = $newMp;
-                        $playerItem->count -= 1;
-                    }
-                }
-                break;
-
-            default:
-                // 不明なアイテムの場合はエラーレスポンスを返す
-                return response()->json(['error' => 'Unknown item'], 400);
+        // HP増加処理
+        if ($player->hp < $maxHp && $playerItem->count > 0) {
+            $newHp = min($maxHp, $player->hp + $itemValue);
+            // HPが上限に達していない場合のみ処理
+            if ($newHp > $player->hp) {
+                $player->hp = $newHp;
+                $playerItem->count -= 1;
+            }
         }
+    } 
+    elseif ($request->itemId == 2) 
+    { // MPかいふく薬
+        // アイテムの値を取得
+        $itemValue = Item::where('id', $request->itemId)->value('value');
 
-        // プレイヤーのステータスを保存
-        $player->save();
-        $playerItem->save();
+        // MP増加処理
+        if ($player->mp < $maxMp && $playerItem->count > 0) {
+            $newMp = min($maxMp, $player->mp + $itemValue);
+            // MPが上限に達していない場合のみ処理
+            if ($newMp > $player->mp) {
+                $player->mp = $newMp;
+                $playerItem->count -= 1;
+            }
+        }
+    } 
+    else
+    {
+        // 不明なアイテムの場合はエラーレスポンスを返す
+        return response()->json(['error' => 'Unknown item'], 400);
+    }
 
-        // レスポンスを返す
-        return response()->json([
-            'itemId' => $request->itemId,
-            'count' => $playerItem->count,
-            'player' => [
-                'id' => $player->id,
-                'hp' => $player->hp,
-                'mp' => $player->mp,
-            ],
-        ]);
+    // プレイヤーのステータスを保存
+    $player->save();
+    $playerItem->save();
+
+    // レスポンスを返す
+    return response()->json([
+        'itemId' => $request->itemId,
+        'count' => $playerItem->count,
+        'player' => [
+            'id' => $player->id,
+            'hp' => $player->hp,
+            'mp' => $player->mp,
+        ],
+    ]);
     }
 }
