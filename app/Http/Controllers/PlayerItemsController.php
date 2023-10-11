@@ -56,7 +56,7 @@ class PlayerItemsController extends Controller
         ->first();
 
     // アイテムの所持数がゼロ && アイテムが存在しない場合はエラーレスポンスを返す
-    if ($playerItem->count <= 0 && !$playerItem) {
+    if (!$playerItem || $playerItem->count <= 0) {
         return response()->json(['error' => 'No items remaining'], 400);
     }
 
@@ -88,7 +88,7 @@ class PlayerItemsController extends Controller
         $itemValue = Item::where('id', $request->itemId)->value('value');
 
         // MP増加処理
-        if($player->hp < $maxHp)// MPが上限に達していない場合のみ処理
+        if($player->mp < $maxMp)// MPが上限に達していない場合のみ処理
         {
             $newMp = min($maxMp, $player->mp + $itemValue);
 
