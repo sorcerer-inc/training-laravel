@@ -74,7 +74,7 @@ class PlayerItemsController extends Controller
         $itemValue = Item::where('id', $request->itemId)->value('value');
 
         // HP増加処理
-        if ($player->hp < $maxHp && $playerItem->count > 0) {
+        if ($playerItem->count > 0) {
             $newHp = min($maxHp, $player->hp + $itemValue);
             // HPが上限に達していない場合のみ処理
             if ($newHp > $player->hp) {
@@ -89,7 +89,7 @@ class PlayerItemsController extends Controller
         $itemValue = Item::where('id', $request->itemId)->value('value');
 
         // MP増加処理
-        if ($player->mp < $maxMp && $playerItem->count > 0) {
+        if ($playerItem->count > 0) {
             $newMp = min($maxMp, $player->mp + $itemValue);
             // MPが上限に達していない場合のみ処理
             if ($newMp > $player->mp) {
