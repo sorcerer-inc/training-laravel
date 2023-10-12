@@ -25,7 +25,6 @@ class AddPercentToItemsTable extends Migration
      */
     public function down()
     {
-        Schema::table('items', function (Blueprint $table) {
             Schema::dropIfExists('items');
         });
     }
