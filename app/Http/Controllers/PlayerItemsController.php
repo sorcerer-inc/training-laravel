@@ -118,150 +118,23 @@ class PlayerItemsController extends Controller
         ]);
     }
     
-    //ガチャの使用処理
-    /*
-    public function useGacha(Request $request, $id)
-    {
-        // プレイヤーの存在確認
-        $player = Player::findOrFail($id);
-
-        // 所持金の確認
-        $gachaCount = $request->input('count');
-        $gachaCost = 10;
-        $totalCost = $gachaCount * $gachaCost;
-
-        if ($player->money < $totalCost) {
-            return response()->json(['error' => 'Not enough money to perform Gacha.'], 400);
-        }
-
-        // ガチャを引く
-        $gachaResults = $this->performGacha($gachaCount);
-
-        // 所持金の更新
-        $player->money -= $totalCost;
-        $player->save();
-
-        //アイテムの更新
-        $updatedItems = $this->updatePlayerItems($player, $gachaResults);
-
-        // レスポンスを返す
-        return response()->json([
-            'results' => $gachaResults,
-            'player' => [
-                'money' => $player->money,
-                'items' => $updatedItems,
-            ],
-        ]);
-    }
-
-    // アイテムの更新処理
-    private function updatePlayerItems($player, $gachaResults)
-    {
-        $updatedItems = [];
-
-        foreach ($gachaResults as $result) {
-            $itemData = $this->incrementPlayerItemCount($player, $result['itemId'], $result['count']);
-            $updatedItems[] = $itemData;
-        }
-
-        return $updatedItems;
-    }
-
-    // アイテムの個数を増加させる処理
-    private function incrementPlayerItemCount($player, $itemId, $count)
-    {
-        $playerItem = PlayerItems::where('player_id', $player->id)
-            ->where('item_id', $itemId)
-            ->first();
-
-        if ($playerItem) {
-            $playerItem->count += $count;
-            $playerItem->save();
-        } else {
-            $player->items()->attach($itemId, ['count' => $count]);
-            $playerItem = PlayerItems::where('player_id', $player->id)
-                ->where('item_id', $itemId)
-                ->first();
-        }
-
-        return [
-            'itemId' => $itemId,
-            'count' => $playerItem->count,
-        ];
-    }
-
-
-    // アイテムの確率に基づいて選択
-    private function selectItemByProbability()
-    {
-        $totalProbability = Item::sum('percent');
-        $randomNumber = mt_rand(0, $totalProbability);
-
-        $selectedItemId = null;
-        $currentProbability = 0;
-
-        foreach (Item::all() as $item) {
-            $currentProbability += $item->percent;
-
-            if ($randomNumber <= $currentProbability) {
-                $selectedItemId = $item->id;
-                break;
-            }
-        }
-
-        return $selectedItemId;
-    }
-
-    // プレイヤーのアイテムデータを取得する処理
-    private function getPlayerItemsData($player)
-    {
-        // プレイヤーがアイテムを持っていない場合は空のコレクションを返す
-        $items = $player->items ?? collect();
-
-        // コメント：ここで $item->id を使用しています。
-        return $items->isNotEmpty() ? $items->map(function ($item) {
-            return [
-                'itemId' => $item->id,
-                'count' => $item->pivot->count,
-            ];
-        }) : [];
-    }
-
-    // ガチャの抽選処理
-    private function performGacha($count)
-    {
-        $gachaResults = [];
-
-        for ($i = 0; $i < $count; $i++) {
-            // アイテムの抽選
-            $selectedItemId = $this->selectItemByProbability();
-
-            // ハズレの場合はスキップ
-            if ($selectedItemId) {
-                $gachaResults[] = [
-                    'itemId' => $selectedItemId,
-                    'count' => 1,
-                ];
-            }
-        }
-
-        return $gachaResults;
-    }
-    */
     // ガチャの抽選処理を修正
     private function selectItemByProbability()
     {
-        $totalProbability = Item::sum('percent');
-        $randomNumber = mt_rand(0, $totalProbability);
+        // 各アイテムのpercentを取得
+        $items = Item::all(['id', 'percent'])->toArray();
+
+        // ランダムな数値を生成
+        $randomPercent = mt_rand(1, 100); // 1から100までの範囲でランダム
 
         $selectedItemId = null;
-        $currentProbability = 0;
+        $currentPercent = 0;
 
-        foreach (Item::all() as $item) {
-            $currentProbability += $item->percent;
+        foreach ($items as $item) {
+            $currentPercent += $item['percent'];
 
-            if ($randomNumber <= $currentProbability) {
-                $selectedItemId = $item->id;
+            if ($randomPercent <= $currentPercent) {
+                $selectedItemId = $item['id'];
                 break;
             }
         }
