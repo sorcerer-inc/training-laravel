@@ -275,12 +275,12 @@ class PlayerItemsController extends Controller
         // プレイヤーがアイテムを持っていない場合は空のコレクションを返す
         $playerItems = $player->playerItems ?? collect();
 
-        return $playerItems->isNotEmpty() ? $playerItems->map(function ($item) {
+        return $playerItems->map(function ($item) {
             return [
                 'itemId' => $item->item_id,
                 'count' => $item->count,
             ];
-        })->values()->all() : [];
+        })->values()->all();
     }
 
     // ガチャの利用処理を修正
@@ -339,9 +339,6 @@ class PlayerItemsController extends Controller
         $player->money -= $totalCost;
         $player->save();
 
-        // プレイヤーのアイテムデータを取得
-        $playerItems = $this->getPlayerItemsData($player);
-
         // ガチャが発生したアイテムの総和を表示
         $totalGachaResults = [];
         foreach ($itemCounts as $itemId => $count) {
@@ -351,12 +348,15 @@ class PlayerItemsController extends Controller
             ];
         }
 
+        // プレイヤーのアイテムデータを取得
+        //$playerItems = $this->getPlayerItemsData($player);
+
         // レスポンスを返す
         return response()->json([
             'results' => $totalGachaResults,
             'player' => [
                 'money' => $player->money,
-                'items' => $playerItems,
+                'items' => $id = PlayerItems::select('item_id as itemId', 'count')->get(),
             ],
         ]);
     }
