@@ -176,8 +176,10 @@ class PlayerItemsController extends Controller
     
                 if ($playerItem) {
                     // アイテムが存在する場合はカウントを増やす
-                    $playerItem->count += 1;
-                    $playerItem->save();
+                    // アイテムが既に存在する場合は count を加算
+                    PlayerItems::where('player_id', $player->id)
+                    ->where('item_id',  $selectedItemId)
+                    ->Update(['count'=>$playerItem->count + 1]);
                 } else {
                     // アイテムが存在しない場合は新しく追加
                     PlayerItems::create([
