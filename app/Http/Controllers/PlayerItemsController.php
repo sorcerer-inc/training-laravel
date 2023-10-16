@@ -142,20 +142,6 @@ class PlayerItemsController extends Controller
         return $selectedItemId;
     }
 
-    // プレイヤーのアイテムデータを取得する処理を修正
-    private function getPlayerItemsData($player)
-    {
-        // プレイヤーがアイテムを持っていない場合は空のコレクションを返す
-        $playerItems = $player->playerItems ?? collect();
-
-        return $playerItems->map(function ($item) {
-            return [
-                'itemId' => $item->item_id,
-                'count' => $item->count,
-            ];
-        })->values()->all();
-    }
-
     // ガチャの利用処理を修正
     public function useGacha(Request $request, $id)
     {
@@ -180,26 +166,32 @@ class PlayerItemsController extends Controller
         for ($i = 0; $i < $gachaCount; $i++) {
             // アイテムの抽選
             $selectedItemId = $this->selectItemByProbability();
-
+    
             // ハズレの場合はスキップ
             if ($selectedItemId) {
                 // アイテムの増加処理
                 $playerItem = PlayerItems::where('player_id', $player->id)
                     ->where('item_id', $selectedItemId)
                     ->first();
-
+    
                 if ($playerItem) {
+                    // アイテムが存在する場合はカウントを増やす
                     $playerItem->count += 1;
                     $playerItem->save();
                 } else {
-                    $player->items()->attach($selectedItemId, ['count' => 1]);
+                    // アイテムが存在しない場合は新しく追加
+                    PlayerItems::create([
+                        'player_id' => $player->id,
+                        'item_id' => $selectedItemId,
+                        'count' => 1
+                    ]);
                 }
-
+    
                 $gachaResults[] = [
                     'itemId' => $selectedItemId,
                     'count' => 1,
                 ];
-
+    
                 // count を保存
                 if (!isset($itemCounts[$selectedItemId])) {
                     $itemCounts[$selectedItemId] = 0;
@@ -220,9 +212,6 @@ class PlayerItemsController extends Controller
                 'count' => $count,
             ];
         }
-
-        // プレイヤーのアイテムデータを取得
-        //$playerItems = $this->getPlayerItemsData($player);
 
         // レスポンスを返す
         return response()->json([
