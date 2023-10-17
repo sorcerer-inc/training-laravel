@@ -71,5 +71,5 @@ docker-compose up
 ## ubuntuにエラーが出る時
 ### /storageファイルの権限問題
 ```bash
-sudo chmod 755 -R /storage
+sudo chmod 755 -R ./storage
 ```
