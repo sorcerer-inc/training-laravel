@@ -34,7 +34,7 @@
     * `git clone`
     * vscodeを起動するコマンド: `code .`
 1. `.env.example` を `.env`にリネームする
-1. Linuxの場合、 `.env` ファイルの `DOCKER_UID` と `DOCKER_GID` を`id -u && id -g` コマンドで確認して同じ値に設定する
+1. `id -u && id -g` コマンドでユーザーIDを確認して、 `.env` ファイルの `DOCKER_UID` と `DOCKER_GID` に同じ値を入れる
 1. `docker-compose up`を実行する
 1. コンテナの中に入る
     ```
