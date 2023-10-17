@@ -3,6 +3,7 @@ services:
   app:
     container_name: app
     build: ./docker/php
+    user: "${DOCKER_UID}:${DOCKER_GID}"
     volumes:
       - .:/var/www
   nginx:
