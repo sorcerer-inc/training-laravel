@@ -1,6 +1,8 @@
 # Laravel研修
 
 ## 用意する物
+1. (windowsの場合、mac,linuxは不要)wslとubuntu
+    * https://www.kkaneko.jp/tools/wsl/wsl2.html
 1. PHP 7.4, composer
    * Windowsの場合
      * https://windows.php.net/download#php-7.4
@@ -23,6 +25,7 @@
      * SequelPro https://sequelpro.com/
 
 ## 初期設定
+1. (windowsの場合、mac,linuxは不要) wslのubuntuに入って、フォルダを作って、git clone
 1. `.env.example` を `.env`にリネームする
 1. `docker-compose up`を実行する
 1. コンテナの中に入る
