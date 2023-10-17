@@ -26,7 +26,7 @@
      * SequelPro https://sequelpro.com/
 
 ## 初期設定
-1. (windowsの場合。mac,linuxは不要) wslのubuntuに入って、作業のフォルダを作って、git clone
+1. (windowsの場合。mac,linuxは不要) wslのubuntuに入って、作業のフォルダを作って、`git clone`
     * ubuntu起動するコマンド: `ubuntu` or `wsl`
     * homeに入る: `cd ~`
     * 作業フォルダを作る `mkdir laravel`
@@ -34,6 +34,7 @@
     * `git clone`
     * vscodeを起動するコマンド: `code .`
 1. `.env.example` を `.env`にリネームする
+1. Linuxの場合、 `.env` ファイルの `DOCKER_UID` と `DOCKER_GID` を`id -u && id -g` コマンドで確認して同じ値に設定する
 1. `docker-compose up`を実行する
 1. コンテナの中に入る
     ```
@@ -67,9 +68,3 @@ docker-compose up
 レスポンスとしてプレイヤー情報が返ってきたらOK。
 
 ![img.png](postman.png)
-
-## ubuntuにエラーが出る時
-### /storageファイルの権限問題
-```bash
-sudo chmod 755 -R ./storage
-```
