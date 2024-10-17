@@ -4,14 +4,6 @@
 1. (windowsの場合。mac,linuxは不要) wslとubuntu
     * https://www.kkaneko.jp/tools/wsl/wsl2.html
     * ubuntuは最新のバージョン
-1. PHP 7.4, composer
-   * Windowsの場合
-     * https://windows.php.net/download#php-7.4
-     * https://getcomposer.org/doc/00-intro.md#using-the-installer
-   * Macの場合
-     1. brew install php@7.4
-     1. brew link php@7.4
-     1. brew install composer
 1. Docker
     * Dockerをインストールする
     * https://www.docker.com/
